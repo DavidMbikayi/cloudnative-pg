@@ -38,7 +38,7 @@ RUN apt-get update \
 
 # install pg_partman
 
-COPY requirements.txt /
+
 
 # Install additional extensions
 RUN set -xe; \
