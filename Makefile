@@ -6,7 +6,7 @@ POSTGRES_BASE_IMAGE=postgres:$(PG_CONTAINER_VERSION)-$(BASE_IMAGE_DISTRO)
 PG_CONTAINER_VERSION = $(PG_MAJOR).$(PG_MINOR)
 TAG=cloudnative-pg:$(PG_CONTAINER_VERSION)-$(BASE_IMAGE_DISTRO)
 CITUS_VERSION=13.0.3
-PG_SEARCH_VERSION='0.15.10'
+PG_S_VERSION='0.15.10'
 deploy: deps buildAndPush clean
 local: deps build clean
 
@@ -29,7 +29,7 @@ buildAndPush: env-PG_CONTAINER_VERSION env-BASE_IMAGE_DISTRO
 	docker  build \
     		--build-arg PG_CONTAINER_VERSION=$(PG_CONTAINER_VERSION) \
 				--build-arg CITUS_VERSION=$(CITUS_VERSION) \
-				--build-arg PG_SEARCH_VERSION=$(PG_SEARCH_VERSION) \
+				--build-arg PG_S_VERSION=$(PG_S_VERSION) \
 				--build-arg BASE_IMAGE_DISTRO=$(BASE_IMAGE_DISTRO) \
 				--build-arg PG_MAJOR=$(PG_MAJOR) \
 				--build-arg PG_MINOR=$(PG_MINOR) \

@@ -2,7 +2,7 @@ ARG PG_MAJOR=14
 ARG PG_MINOR=1
 ARG PG_VERSION=${PG_MAJOR}.${PG_MINOR}
 ARG CITUS_VERSION=13.0.1
-ARG PG_SEARCH_VERSION=1.0.0
+ARG PG_S_VERSION=1.0.0
 
 FROM postgres:${PG_VERSION}-bookworm
 
@@ -30,11 +30,11 @@ RUN set -xe; \
     apt-get install -y postgresql-${PG_MAJOR}-citus-${CITUS_VERSION} \
                           postgresql-${PG_MAJOR}-hll=2.18.citus-1 \
                           postgresql-${PG_MAJOR}-topn=2.7.0.citus-1 ; \
-		curl -fsSL https://github.com/paradedb/paradedb/releases/download/v${PG_SEARCH_VERSION}/postgresql-${PG_MAJOR}-pg-search_${PG_SEARCH_VERSION}-1PARADEDB-bookworm_amd64.deb \
-			-o postgresql-${PG_MAJOR}-pg-search_${PG_SEARCH_VERSION}-1PARADEDB-bookworm_amd64.deb; \
-		dpkg -i postgresql-${PG_MAJOR}-pg-search_${PG_SEARCH_VERSION}-1PARADEDB-bookworm_amd64.deb; \
+		curl -fsSL https://github.com/paradedb/paradedb/releases/download/v${PG_S_VERSION}/postgresql-${PG_MAJOR}-pg-search_${PG_S_VERSION}-1PARADEDB-bookworm_amd64.deb \
+			-o postgresql-${PG_MAJOR}-pg-search_${PG_S_VERSION}-1PARADEDB-bookworm_amd64.deb; \
+		dpkg -i postgresql-${PG_MAJOR}-pg-search_${PG_S_VERSION}-1PARADEDB-bookworm_amd64.deb; \
     apt-get purge -y --auto-remove curl wget ; \
-		rm -rf postgresql-${PG_MAJOR}-pg-search_${PG_SEARCH_VERSION}-1PARADEDB-bookworm_amd64.deb; \
+		rm -rf postgresql-${PG_MAJOR}-pg-search_${PG_S_VERSION}-1PARADEDB-bookworm_amd64.deb; \
     rm -rf /var/lib/apt/lists/*
 
 # install pg_partman
