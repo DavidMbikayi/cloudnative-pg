@@ -1,7 +1,4 @@
-ARG CITUS_VERSION=13.0.3
-ARG PG_SEARCH_VERSION=0.15.10
-
-FROM postgres:17.4-bookworm
+FROM postgres:${PG_MAJOR}.${PG_MINOR}-bookworm
 
 # Do not split the description, otherwise we will see a blank space in the labels
 LABEL name="PostgreSQL Container Images" \
