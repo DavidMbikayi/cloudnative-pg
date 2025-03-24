@@ -5,8 +5,8 @@ BASE_IMAGE_DISTRO ?= bookworm
 DOCKERFILE=$(BASE_IMAGE_DISTRO)/Dockerfile
 POSTGRES_BASE_IMAGE=postgres:$(PG_CONTAINER_VERSION)-$(BASE_IMAGE_DISTRO)
 TAG=postgres-plv8:$(PG_CONTAINER_VERSION)-$(BASE_IMAGE_DISTRO)
-
-
+CITUS_VERSION=13.0.3
+PG_SEARCH_VERSION=0.15.10
 deploy: deps buildAndPush clean
 local: deps build clean
 
@@ -28,6 +28,8 @@ buildAndPush: env-PG_CONTAINER_VERSION env-BASE_IMAGE_DISTRO
 	@echo "$(DOCKER_ACCESS_TOKEN)" | docker login --username "$(DOCKER_USERNAME)" --password-stdin docker.io
 	docker  build \
     		--build-arg PG_CONTAINER_VERSION=$(PG_CONTAINER_VERSION) \
+				--build-arg CITUS_VERSION=$(CITUS_VERSION) \
+				--build-arg PG_SEARCH_VERSION=$(PG_SEARCH_VERSION) \
     		--file  $(DOCKERFILE)  \
 			--push \
 			-t $(TAG) .
