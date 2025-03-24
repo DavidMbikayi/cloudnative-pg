@@ -6,7 +6,7 @@ SEARCH_VERSION ?= 0.15.10
 DOCKERFILE=$(BASE_IMAGE_DISTRO)/Dockerfile
 POSTGRES_BASE_IMAGE=postgres:$(PG_CONTAINER_VERSION)-$(BASE_IMAGE_DISTRO)
 PG_CONTAINER_VERSION = $(PG_MAJOR).$(PG_MINOR)
-TAG=cloudnative-pg:$(PG_CONTAINER_VERSION)-$(BASE_IMAGE_DISTRO)
+TAG=dmbikayi/cloudnative-pg:$(PG_CONTAINER_VERSION)-$(BASE_IMAGE_DISTRO)
 deploy: deps buildAndPush clean
 local: deps build clean
 
