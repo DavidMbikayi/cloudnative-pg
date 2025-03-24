@@ -27,7 +27,7 @@ RUN set -xe; \
        wget \
 		; \
     curl -s https://install.citusdata.com/community/deb.sh | bash;  \
-    apt-get install -y postgresql-${PG_MAJOR}-citus-13.0=${CITUS_VERSION} \
+    apt-get install -y postgresql-${PG_MAJOR}-citus-13.0 \
                           postgresql-${PG_MAJOR}-hll=2.18.citus-1 \
                           postgresql-${PG_MAJOR}-topn=2.7.0.citus-1 ; \
 		wget https://github.com/paradedb/paradedb/releases/download/v${PG_SEARCH_VERSION}/postgresql-${PG_MAJOR}-pg-search_${PG_SEARCH_VERSION}-1PARADEDB-bookworm_amd64.deb; \
