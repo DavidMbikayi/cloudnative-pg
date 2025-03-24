@@ -1,3 +1,6 @@
+ARG CITUS_VERSION=13.0.3
+ARG PG_SEARCH_VERSION=0.15.10
+
 FROM postgres:17.4-bookworm
 
 # Do not split the description, otherwise we will see a blank space in the labels
@@ -18,12 +21,15 @@ RUN apt-get update \
        ca-certificates \
        curl \
        wget \
+			 libicu74 \
     && curl -s https://install.citusdata.com/community/deb.sh | bash \
     && apt-get install -y postgresql-$PG_MAJOR-citus-13.0=$CITUS_VERSION \
                           postgresql-$PG_MAJOR-hll=2.18.citus-1 \
                           postgresql-$PG_MAJOR-topn=2.7.0.citus-1 \
     && echo "deb https://packagecloud.io/timescale/timescaledb/debian/ $(lsb_release -c -s) main" | sudo tee /etc/apt/sources.list.d/timescaledb.list \
     && wget --quiet -O - https://packagecloud.io/timescale/timescaledb/gpgkey | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/timescaledb.gpg \
+		&& https://github.com/paradedb/paradedb/releases/download/v$PG_SEARCH_VERSION/postgresql-$PG_MAJOR-pg-search_$PG_SEARCH_VERSION-1PARADEDB-bookworm_amd64.deb \
+		&& dpkg -i postgresql-$PG_VERSION-pg-search_$PG_SEARCH_VERSION-1PARADEDB-bookworm_amd64.deb \
     && apt-get update \
     && apt-get install -y timescaledb-2-postgresql-$PG_MAJOR \
     && apt-get purge -y --auto-remove curl wget \
