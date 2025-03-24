@@ -1,4 +1,8 @@
-FROM postgres:${PG_MAJOR}.${PG_MINOR}-bookworm
+ARG PG_MAJOR=14
+ARG PG_MINOR=1
+ARG PG_VERSION=${PG_MAJOR}.${PG_MINOR}
+
+FROM postgres:${PG_VERSION}-bookworm
 
 # Do not split the description, otherwise we will see a blank space in the labels
 LABEL name="PostgreSQL Container Images" \
