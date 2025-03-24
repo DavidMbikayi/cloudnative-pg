@@ -17,7 +17,7 @@ COPY requirements.txt /
 
 # install Citus
 RUN set -xe; \
-		apt-get update \
+		apt-get update; \
     apt-get install -y --no-install-recommends \
        ca-certificates \
        curl \
