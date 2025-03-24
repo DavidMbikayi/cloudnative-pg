@@ -1,25 +1,32 @@
 PG_MAJOR ?= 17
 PG_MINOR ?= 4
-BASE_IMAGE_DISTRO ?= bookworm
+BASE_IMAGE_DISTRO ?= 'bookworm'
+CITUS_VERSION ?= 13.0
+SEARCH_VERSION ?= 0.15.10
 DOCKERFILE=$(BASE_IMAGE_DISTRO)/Dockerfile
 POSTGRES_BASE_IMAGE=postgres:$(PG_CONTAINER_VERSION)-$(BASE_IMAGE_DISTRO)
 PG_CONTAINER_VERSION = $(PG_MAJOR).$(PG_MINOR)
 TAG=cloudnative-pg:$(PG_CONTAINER_VERSION)-$(BASE_IMAGE_DISTRO)
-CITUS_VERSION=13.0.3
-PG_S_VERSION='0.15.10'
 deploy: deps buildAndPush clean
 local: deps build clean
 
 # Dependencies for the project such as Docker Node Alpine image
-deps: env-PG_CONTAINER_VERSION env-BASE_IMAGE_DISTRO
+deps: env-PG_CONTAINER_VERSION 
 	$(info Pull latest version of $(POSTGRES_BASE_IMAGE))
 	$(info dockerfile $(DOCKERFILE))
 	docker pull $(POSTGRES_BASE_IMAGE)
 
 
+
 build: deps
 	docker  build \
+	  --no-cache \
+		--progress=plain \
 		--build-arg PG_CONTAINER_VERSION=$(PG_CONTAINER_VERSION) \
+		--build-arg CITUS_VERSION=$(CITUS_VERSION) \
+		--build-arg SEARCH_VERSION=$(SEARCH_VERSION) \
+		--build-arg PG_MAJOR=$(PG_MAJOR) \
+		--build-arg PG_MINOR=$(PG_MINOR) \
 		--file  $(DOCKERFILE)  \
 		-t $(TAG) .
 
@@ -29,7 +36,7 @@ buildAndPush: env-PG_CONTAINER_VERSION env-BASE_IMAGE_DISTRO
 	docker  build \
     		--build-arg PG_CONTAINER_VERSION=$(PG_CONTAINER_VERSION) \
 				--build-arg CITUS_VERSION=$(CITUS_VERSION) \
-				--build-arg PG_S_VERSION=$(PG_S_VERSION) \
+				--build-arg SEARCH_VERSION=$(SEARCH_VERSION) \
 				--build-arg BASE_IMAGE_DISTRO=$(BASE_IMAGE_DISTRO) \
 				--build-arg PG_MAJOR=$(PG_MAJOR) \
 				--build-arg PG_MINOR=$(PG_MINOR) \
