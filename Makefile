@@ -30,6 +30,9 @@ buildAndPush: env-PG_CONTAINER_VERSION env-BASE_IMAGE_DISTRO
     		--build-arg PG_CONTAINER_VERSION=$(PG_CONTAINER_VERSION) \
 				--build-arg CITUS_VERSION=$(CITUS_VERSION) \
 				--build-arg PG_SEARCH_VERSION=$(PG_SEARCH_VERSION) \
+				--build-arg BASE_IMAGE_DISTRO=$(BASE_IMAGE_DISTRO) \
+				--build-arg PG_MAJOR=$(PG_MAJOR) \
+				--build-arg PG_MINOR=$(PG_MINOR) \
     		--file  $(DOCKERFILE)  \
 			--push \
 			-t $(TAG) .
